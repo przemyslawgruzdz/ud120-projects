@@ -10,8 +10,11 @@ def outlierCleaner(predictions, ages, net_worths):
         Return a list of tuples named cleaned_data where 
         each tuple is of the form (age, net_worth, error).
     """
+    import numpy
+    errors = net_worths-predictions
+    threshold = numpy.percentile(numpy.absolute(errors), 90)
     
-    cleaned_data = []
+    cleaned_data = [(age, net_worth, error)for age,  net_worth, error in zip(ages, net_worths, errors) if abs(error) <= threshold]
 
     ### your code goes here
 
